@@ -1,18 +1,22 @@
 import os
 from flask import Flask, render_template, request, session, redirect
 from flask_cors import CORS
-# from flask_migrate import Migrate
+from flask_migrate import Migrate
 from flask_wtf.csrf import CSRFProtect, generate_csrf
 from flask_login import LoginManager
 from .models import db, User
 from .api.user_routes import user_routes
 from .api.auth_routes import auth_routes
+from .api.bible_search_routes import search_bible
 # from .seeds import seed_commands
 from .config import Config
-# from dotenv import load_dotenv
-# load_dotenv()  # This loads the variables from .env into the environment
+from dotenv import load_dotenv
+load_dotenv()  # This loads the variables from .env into the environment
+import logging
 
-# app = Flask(__name__, static_folder='../react-app/build', static_url_path='/')
+logging.basicConfig(level=logging.DEBUG)
+
+app = Flask(__name__, static_folder='../../client/public')
 app = Flask(__name__)
 
 # Setup login manager
@@ -31,10 +35,11 @@ def load_user(id):
 app.config.from_object(Config)
 app.register_blueprint(user_routes, url_prefix='/api/users')
 app.register_blueprint(auth_routes, url_prefix='/api/auth')
+app.register_blueprint(search_bible, url_prefix='/api/search')
 
 
 db.init_app(app)
-# Migrate(app, db)
+Migrate(app, db)
 
 
 # Application Security
@@ -46,6 +51,20 @@ CORS(app)
 # Therefore, we need to make sure that in production any
 # request made over http is redirected to https.
 # Well.........
+
+import os
+
+@app.route('/test_static')
+def test_static():
+    file_path = os.path.join(app.static_folder, 'index.html')
+    # Log the path to see where Flask is looking for the file
+    print(f"Looking for index.html at: {file_path}")
+    if os.path.exists(file_path):
+        return app.send_static_file('index.html')
+    else:
+        return f"File not found at {file_path}", 404
+
+
 @app.before_request
 def https_redirect():
     if os.environ.get('FLASK_ENV') == 'production':
@@ -82,21 +101,24 @@ def api_help():
 # @app.route('/', defaults={'path': ''})
 @app.route('/')
 def test():
-    return str(app.config['SQLALCHEMY_DATABASE_URI'])
+    return str("This is the root")
 
 
-@app.route('/<path:path>')
-def react_root(path):
-    """
-    This route will direct to the public directory in our
-    react builds in the production environment for favicon
-    or index.html requests
-    """
-    if path == 'favicon.ico':
-        return app.send_from_directory('public', 'favicon.ico')
-    return app.send_static_file('index.html')
+# @app.route('/<path:path>')
+# def client(path):
+#     """
+#     This route will direct to the public directory in our
+#     react builds in the production environment for favicon
+#     or index.html requests
+#     """
+#     if path == 'favicon.ico':
+#         return app.send_from_directory('public', 'favicon.ico')
+#     return app.send_static_file('index.html')
 
 
-@app.errorhandler(404)
-def not_found(e):
-    return app.send_static_file('index.html')
+# @app.errorhandler(404)
+# def not_found(e):
+#     return app.send_static_file('index.html')
+
+# if __name__ == '__main__':
+#     app.run(debug=True)

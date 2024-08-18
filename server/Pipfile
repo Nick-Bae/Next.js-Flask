@@ -14,6 +14,12 @@ markupsafe = "==2.1.3"
 six = "==1.16.0"
 werkzeug = "==2.3.6"
 flask-migrate = "*"
+alembic = "*"
+flask-wtf = "*"
+flask-login = "*"
+email-validator = "*"
+python-dotenv = "*"
+psycopg2-binary = "*"
 
 [dev-packages]
 

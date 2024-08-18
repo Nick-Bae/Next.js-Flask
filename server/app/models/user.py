@@ -2,11 +2,7 @@ from .db import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 
-wishlist = db.Table(
-    "wishlist",
-    db.Column("user_id", db.Integer, db.ForeignKey("users.id")),
-    db.Column("product_id", db.Integer, db.ForeignKey("products.id"))
-)
+
 
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
