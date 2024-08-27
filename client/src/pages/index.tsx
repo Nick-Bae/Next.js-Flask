@@ -1,12 +1,22 @@
 // /pages/index.tsx
 import type { NextPage } from 'next';
 import BibleSearch from '../components/BibleDisplay/BibleSearch';
-import BibleDisplay from 'src/components/BibleDisplay/BibleDisplay';
-
+// import BibleDisplay from 'src/components/BibleDisplay/BibleDisplay';
+// 
 const Home: NextPage = () => {
   return (
     <div className="flex justify-center items-center h-screen">
-      <BibleDisplay />
+      <div>
+        Welcom to Bible My Note
+      </div>
+      <BibleSearch 
+      initialBook="Genesis"
+      initialChapter="1"
+      initialVersion="ESV"
+      initialPassageText={null}
+      initialError={null}
+      />
+      {/* <BibleDisplay /> */}
       {/* <BibleSearch book="창세기" chapter="1" /> */}
     </div>
   );

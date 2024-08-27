@@ -8,6 +8,7 @@ from .models import db, User
 from .api.user_routes import user_routes
 from .api.auth_routes import auth_routes
 from .api.bible_search_routes import search_bible
+from .api.note_routes import note_routes
 # from .seeds import seed_commands
 from .config import Config
 from dotenv import load_dotenv
@@ -36,7 +37,7 @@ app.config.from_object(Config)
 app.register_blueprint(user_routes, url_prefix='/api/users')
 app.register_blueprint(auth_routes, url_prefix='/api/auth')
 app.register_blueprint(search_bible, url_prefix='/api/search')
-
+app.register_blueprint(note_routes, url_prefix='/api/note')
 
 db.init_app(app)
 Migrate(app, db)
@@ -122,3 +123,5 @@ def test():
 
 # if __name__ == '__main__':
 #     app.run(debug=True)
+
+

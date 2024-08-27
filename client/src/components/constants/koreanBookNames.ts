@@ -61,9 +61,9 @@ export const koreanBookNames: Record<string, string> = {
     'James': '야고보서',
     '1 Peter': '베드로전서',
     '2 Peter': '베드로후서',
-    '1 John': '요한일서',
-    '2 John': '요한이서',
-    '3 John': '요한삼서',
+    '1 John': '요한1서',
+    '2 John': '요한2서',
+    '3 John': '요한3서',
     'Jude': '유다서',
     'Revelation': '요한계시록'
   };

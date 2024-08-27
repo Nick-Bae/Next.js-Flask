@@ -1,14 +1,12 @@
-// /pages/_app.tsx
+import { StoreProvider } from '../store/StoreProvider';
 import type { AppProps } from 'next/app';
-import { Provider } from 'react-redux';
-import { store } from '../store/store';
-import '../styles/globals.css'; // Tailwind CSS import
+import '../styles/globals.css'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <Provider store={store}>
+    <StoreProvider>
       <Component {...pageProps} />
-    </Provider>
+    </StoreProvider>
   );
 }
 
